@@ -1,0 +1,3 @@
+[submodule "fmriprep-slurm"]
+	path = fmriprep-slurm
+	url = git@github.com:SIMEXP/fmriprep-slurm.git
