@@ -3,7 +3,7 @@
 #SBATCH --job-name=preventad_qc
 #SBATCH --output=/scratch/hwang1/logs/%x_%A-%a.out
 #SBATCH --error=/scratch/hwang1/logs/%x_%A-%a.err
-#SBATCH --time=12:00:00
+#SBATCH --time=36:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=16G
 #SBATCH --array=0-381
@@ -38,7 +38,7 @@ subject_output_dir="$QC_OUTPUT/sub-$subject_label"
 mkdir -p "$subject_output_dir"
 
 # run qc if the directory does not contain .tsv files
-if [[ -n $(find "$subject_output_dir" -maxdepth 1 -type f -name "*.tsv") ]]; then
+if [[ -n $(find "$subject_output_dir" -maxdepth 1 -type f -name "*rest*.tsv") ]]; then
     echo "Skipping subject directory with .tsv files: $subject_output_dir"
     exit 0
 fi
