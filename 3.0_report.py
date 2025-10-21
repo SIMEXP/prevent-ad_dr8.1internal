@@ -10,6 +10,7 @@ from matplotlib.lines import Line2D
 
 path_qc = Path("/scratch/hwang1/preventad-dr8.1internal/mri/wave1/giga_auto_qc-0.3.4_scrub.5")
 path_qc_agg = path_qc / "dataset-preventad81internal_task-rest_desc-cerebellum_report.tsv"
+path_processed = Path("/scratch/hwang1/preventAD_processed-data")
 path_pheno = Path("/scratch/hwang1/preventad-dr8.1internal/phenotype/pheno")
 path_fmriprep = Path("/scratch/hwang1/preventad-dr8.1internal/mri/wave1/fmriprep-20.2.8lts")
 
@@ -161,7 +162,7 @@ pheno = pd.merge(
 )
 pheno = pheno.drop(columns=['Visit_label'])
 pheno = pheno.sort_values(['participant_id', 'ses'])
-pheno.to_csv(path_qc / "dataset-preventad81internal_desc-sexage_pheno.tsv", 
+pheno.to_csv(path_processed / "dataset-preventad81internal_desc-sexage_pheno.tsv", 
              sep='\t', index=False
             )
 
@@ -179,4 +180,3 @@ plt.ylabel('Participants')
 plt.legend(custom_lines, ['Present', 'Missing'], title='fMRI session')
 plt.savefig(path_qc / "missing_fmri_heatmap.png")
 plt.close()
-check_missing_session.to_csv('test.csv')

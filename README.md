@@ -11,3 +11,6 @@ Currently this is for wave 1.
 ## Data exlusion
 - MTL0068 - Excluded due to data shape issue in preproecessing.
 
+## Archive
+
+tar -vcf /path/to/dataset-preventad_version-8.1internal_pipeline-gigapreprocess2.tar dataset-preventad_version-8.1internal_pipeline-gigapreprocess2
