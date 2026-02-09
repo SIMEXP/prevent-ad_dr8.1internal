@@ -4,12 +4,13 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import re
 
+
 sns.set_theme(style="whitegrid")
+
 
 def toSnakeCase(string):
     string = re.sub(r'(?<=[a-z])(?=[A-Z])|[^a-zA-Z]', ' ', string).strip().replace(' ', '_')
     return ''.join(string.lower())
-
 
 
 def plot_demographics(demo, title='Demographic Distribution at Baseline'):
@@ -29,10 +30,11 @@ def plot_demographics(demo, title='Demographic Distribution at Baseline'):
     ax2.set_ylabel('Count')
     ax2.set_ylim(0, 300)
     for p in ax2.patches:
-        ax2.annotate(int(p.get_height()), (p.get_x() + p.get_width() / 2., p.get_height()),  
-                    ha='center', va='center', xytext = (0, -15), 
-                    textcoords = 'offset points',
-                    color='white')
+        ax2.annotate(int(p.get_height()), (p.get_x() + p.get_width() / 2., p.get_height()),
+                     ha='center', va='center', xytext = (0, -15), 
+                     textcoords = 'offset points',
+                     color='white'
+                    )
 
     sns.histplot(data=demo, x='cerebellum_coverage', hue='Sex', bins=30, kde=True, stat='density', common_norm=False, ax=ax3)
     ax3.set_title('Cerebellum Coverage Distribution by Sex at Baseline')
@@ -68,7 +70,7 @@ if __name__ == "__main__":
     demo = demo.loc[demo['ses'] == "BL00", :]
     demo = demo.loc[demo['run'] == 1, :]
     plot_demographics(demo, title='Demographic Distribution before QC Filtering')
-    demo = demo.loc[demo['cerebellum_coverage']>0.75, :]
-    demo = demo.loc[demo['proportion_kept']>0.5, :]
+    demo = demo.loc[demo['cerebellum_coverage'] > 0.75, :]
+    demo = demo.loc[demo['proportion_kept'] > 0.5, :]
     plot_demographics(demo, title='Demographic Distribution after QC Filtering')
 
