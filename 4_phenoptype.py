@@ -22,9 +22,9 @@ phenotype_dict = {
         "file": "PREVENT-AD_internal_n387__CSF_proteins.csv",
         "columns": ["tau","ptau","Amyloid_beta_1_42", "Visit_label"]
     },
-    "PETamyloid": {
-        "file": "PREVENT-AD_internal_n387__PET_FreeSurfer53_volumes.csv",
-        "columns": ["amyloid_index_Volume", "PET_tracer"]
+    "PET": {
+        "file": "PREVENT-AD_internal_n387__PET_NAV_SUVR_ref-cerebellumCortex.csv",
+        "columns": ["amyloid_index_SUVR", "centiloid_s0_WhlCbl"],
     },  # add new phenotypes between here and the MCI phenotype
     "MCI": {
         "file": "PREVENT-AD_internal_n387__MCI.csv",
@@ -48,10 +48,6 @@ def load_phenotype_data() -> pd.DataFrame:
             df = df.rename(columns={"initial_MCI_visit_Candidate_Age": "MCI_onset_age"})
         if 'Visit_label' in df.columns:
             df.set_index(['participant_id', 'Visit_label'], inplace=True)
-        elif 'PET_tracer' in df.columns:
-            df = df[df['PET_tracer'] == 'NAV']
-            df.drop(columns=['PET_tracer'], inplace=True)
-            df.set_index(['participant_id'], inplace=True)
         else:
             df.set_index('participant_id', inplace=True)
         data_frames.append(df)
@@ -74,6 +70,4 @@ if __name__ == "__main__":
         bl = pd.concat([bl, first_sessions], axis=0)
         pheno_info = pd.merge(pheno_info, bl, left_index=True, right_index=True, how='left')
     pheno_info = pheno_info.fillna("n/a")
-    # bl_mask = pheno_info.index.get_level_values('Visit_label') == 'BL00'
-    # pheno_info = pheno_info[bl_mask].droplevel('Visit_label')
     pheno_info.to_csv('prevent-ad/scratch/dataset-preventad_version-8.1internal_pipeline-gigapreprocess2/dataset-preventad81internal_desc-subjlvltargets_pheno.tsv', sep='\t')
